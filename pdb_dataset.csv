@@ -1,0 +1,223 @@
+pdb_id,name,category,description
+1R42,Beta-glucuronidase,Enzyme,Original test structure
+2P4E,PCSK9,Proprotein convertase,Cholesterol metabolism enzyme
+1UBQ,Ubiquitin,Small protein,Post-translational modification
+1LMB,Lysozyme,Antimicrobial,Bacteriolytic enzyme
+1HEN,Lysozyme,Antimicrobial,Hen egg white lysozyme
+1A2P,Lysozyme,Antimicrobial,Human lysozyme
+1CRN,Crambin,Small protein,Plant seed protein
+1BPI,Bactericidal protein,Antimicrobial,Neutrophil protein
+1E6I,Green fluorescent protein,Fluorescent,GFP variant
+1GFL,Green fluorescent protein,Fluorescent,Wild-type GFP
+2B3P,Green fluorescent protein,Fluorescent,Enhanced GFP
+1QHD,Myoglobin,Oxygen transport,Sperm whale myoglobin
+1MBA,Myoglobin,Oxygen transport,Horse myoglobin
+1MBN,Myoglobin,Oxygen transport,Human myoglobin
+1HHO,Hemoglobin,Oxygen transport,Human hemoglobin alpha
+1A3N,Hemoglobin,Oxygen transport,Human hemoglobin beta
+1FSZ,Cytochrome c,Electron transport,Horse cytochrome c
+1HRC,Cytochrome c,Electron transport,Tuna cytochrome c
+1YCC,Cytochrome c,Electron transport,Yeast cytochrome c
+1AKG,Adenylate kinase,Enzyme,ATP/AMP phosphotransferase
+1DVR,Adenylate kinase,Enzyme,Human adenylate kinase
+1P4B,Adenylate kinase,Enzyme,Bacillus adenylate kinase
+1CAT,Catalase,Antioxidant enzyme,Bovine catalase
+1TGN,Superoxide dismutase,Antioxidant enzyme,Human SOD1
+1SPD,Superoxide dismutase,Antioxidant enzyme,Bovine SOD1
+1B8G,Thioredoxin,Redox protein,Human thioredoxin
+1ERT,Thioredoxin,Redox protein,E. coli thioredoxin
+2TRX,Thioredoxin,Redox protein,Human thioredoxin
+1RIB,Ribonuclease A,Enzyme,Bovine ribonuclease
+1AFX,Ribonuclease A,Enzyme,Human ribonuclease
+1GOX,Glucose oxidase,Enzyme,Aspergillus glucose oxidase
+1HRP,Peroxidase,Enzyme,Horseradish peroxidase
+1BGO,Beta-galactosidase,Enzyme,E. coli beta-galactosidase
+1TIM,Triose phosphate isomerase,Enzyme,Chicken TIM
+1HTM,Triose phosphate isomerase,Enzyme,Human TIM
+1YPI,Triose phosphate isomerase,Enzyme,Yeast TIM
+1ALD,Aldolase,Enzyme,Rabbit aldolase
+1FBA,Aldolase,Enzyme,Human aldolase
+1ZAP,Aldolase,Enzyme,Thermotoga aldolase
+1GKY,Guanylate kinase,Enzyme,Yeast guanylate kinase
+1EX7,Guanylate kinase,Enzyme,Human guanylate kinase
+1NME,NM23 protein,Enzyme,Human NM23
+1STN,NM23 protein,Enzyme,Dictyostelium NM23
+1HCK,Src kinase,Signaling,Human Hck kinase
+1CSK,Csk kinase,Signaling,Human Csk kinase
+1FMK,Src kinase,Signaling,Human c-Src kinase
+1KSW,PKA catalytic subunit,Signaling,Human protein kinase A
+1ATP,PKA catalytic subunit,Signaling,Porcine protein kinase A
+1JLU,PKA catalytic subunit,Signaling,Mouse protein kinase A
+1CDK,Cyclin-dependent kinase,Cell cycle,Human CDK2
+2CCH,Cyclin-dependent kinase,Cell cycle,Human CDK2-cyclin A
+1HCL,Cyclin-dependent kinase,Cell cycle,Human CDK2-cyclin E
+1IGY,Immunoglobulin,Antibody,Human IgG Fab
+1FBI,Immunoglobulin,Antibody,Anti-fluorescein Fab
+1AO6,Immunoglobulin,Antibody,Anti-lysozyme Fab
+1HYL,Hyaluronidase,Enzyme,Human hyaluronidase
+1BGH,Hyaluronidase,Enzyme,Bovine testicular hyaluronidase
+1FCB,Immunoglobulin,Antibody,Fc fragment
+1FC2,Immunoglobulin,Antibody,Human IgG Fc
+1DN2,Immunoglobulin,Antibody,Mouse IgG Fc
+1JHL,Immunoglobulin,Antibody,Humanized anti-HER2 Fab
+1NCD,Neuraminidase,Enzyme,Influenza neuraminidase
+1NN2,Neuraminidase,Enzyme,Influenza B neuraminidase
+1F8B,Neuraminidase,Enzyme,Influenza A neuraminidase
+1ETT,Trypsin,Protease,Bovine trypsin
+1TLD,Trypsin,Protease,Human trypsin
+1H4W,Trypsin,Protease,Rat trypsin
+1ELA,Elastase,Protease,Porcine elastase
+1QNJ,Elastase,Protease,Human neutrophil elastase
+1B0F,Elastase,Protease,Human leukocyte elastase
+1SGT,Subtilisin,Protease,Bacillus subtilisin
+1SUB,Subtilisin,Protease,Subtilisin BPN
+1SBC,Subtilisin,Protease,Subtilisin Carlsberg
+1PEP,Pepsin,Protease,Porcine pepsin
+1PSO,Pepsin,Protease,Human pepsinogen
+1HTM,Pepsin,Protease,Human pepsin
+1CMP,Carboxypeptidase A,Protease,Bovine carboxypeptidase A
+1CPA,Carboxypeptidase A,Protease,Bovine carboxypeptidase A
+1DTD,Carboxypeptidase A,Protease,Human carboxypeptidase A
+1PAH,Phenylalanine hydroxylase,Enzyme,Human PAH
+1J8U,Phenylalanine hydroxylase,Enzyme,Human PAH regulatory domain
+1LRM,Luciferase,Enzyme,Firefly luciferase
+1LCI,Luciferase,Enzyme,Renilla luciferase
+1BA3,Luciferase,Enzyme,Bacterial luciferase
+1GOD,Glucose dehydrogenase,Enzyme,Bacillus glucose dehydrogenase
+1GDH,Glutamate dehydrogenase,Enzyme,Bovine glutamate dehydrogenase
+1BGV,Glutamate dehydrogenase,Enzyme,Clostridium glutamate dehydrogenase
+1LDH,Lactate dehydrogenase,Enzyme,Pig heart lactate dehydrogenase
+1LLD,Lactate dehydrogenase,Enzyme,Human lactate dehydrogenase
+1T2F,Lactate dehydrogenase,Enzyme,Bacillus lactate dehydrogenase
+1MDH,Malate dehydrogenase,Enzyme,Pig heart malate dehydrogenase
+1B8P,Malate dehydrogenase,Enzyme,E. coli malate dehydrogenase
+1GUZ,Malate dehydrogenase,Enzyme,Chloroplast malate dehydrogenase
+1ALC,Alcohol dehydrogenase,Enzyme,Horse liver alcohol dehydrogenase
+1ADH,Alcohol dehydrogenase,Enzyme,Human alcohol dehydrogenase
+1D1T,Alcohol dehydrogenase,Enzyme,Yeast alcohol dehydrogenase
+1GPB,Glycogen phosphorylase,Enzyme,Rabbit glycogen phosphorylase
+1GPA,Glycogen phosphorylase,Enzyme,Human glycogen phosphorylase
+1L5W,Glycogen phosphorylase,Enzyme,Potato phosphorylase
+1PFK,Phosphofructokinase,Enzyme,Rabbit phosphofructokinase
+1PFJ,Phosphofructokinase,Enzyme,E. coli phosphofructokinase
+2PFK,Phosphofructokinase,Enzyme,Bacillus phosphofructokinase
+1PYK,Pyruvate kinase,Enzyme,Rabbit pyruvate kinase
+1A3W,Pyruvate kinase,Enzyme,Human pyruvate kinase
+1T0J,Pyruvate kinase,Enzyme,Yeast pyruvate kinase
+1ENO,Enolase,Enzyme,Yeast enolase
+1ONE,Enolase,Enzyme,Human enolase
+1EBH,Enolase,Enzyme,E. coli enolase
+1GAL,Galactose-1-phosphate uridyltransferase,Enzyme,E. coli GALT
+1GUP,Galactose-1-phosphate uridyltransferase,Enzyme,Human GALT
+1HXK,Hexokinase,Enzyme,Yeast hexokinase
+1DGK,Hexokinase,Enzyme,Human hexokinase
+1BG2,Hexokinase,Enzyme,E. coli glucokinase
+1A0O,Alpha-amylase,Enzyme,Pig pancreatic amylase
+1HVH,Alpha-amylase,Enzyme,Human salivary amylase
+1TCM,Alpha-amylase,Enzyme,Bacillus amylase
+1BG9,Beta-amylase,Enzyme,Sweet potato beta-amylase
+1VEM,Beta-amylase,Enzyme,Soybean beta-amylase
+1FA2,Beta-amylase,Enzyme,Bacillus beta-amylase
+1CYS,Cysteine protease,Protease,Papain
+1PPN,Cysteine protease,Protease,Papain
+1PE6,Cysteine protease,Protease,Cathepsin B
+1CTH,Cysteine protease,Protease,Cathepsin H
+1MIR,Cysteine protease,Protease,Cathepsin S
+1AJU,Cysteine protease,Protease,Cathepsin L
+1ATK,Aspartic protease,Protease,HIV-1 protease
+1HSG,Aspartic protease,Protease,HIV-1 protease
+1HTM,Aspartic protease,Protease,Renin
+1REN,Aspartic protease,Protease,Human renin
+1SMR,Aspartic protease,Protease,Rhizopuspepsin
+1THM,Thrombin,Blood coagulation,Human thrombin
+1PPB,Thrombin,Blood coagulation,Human thrombin
+1HAG,Thrombin,Blood coagulation,Bovine thrombin
+1FGB,Fibrinogen,Blood coagulation,Human fibrinogen
+1DEQ,Fibrinogen,Blood coagulation,Human fibrinogen
+1M1J,Fibrinogen,Blood coagulation,Human fibrinogen
+1TFH,Transferrin,Iron transport,Human transferrin
+1H76,Transferrin,Iron transport,Human lactoferrin
+1LCT,Transferrin,Iron transport,Human lactoferrin
+1HMB,Hemoglobin,Oxygen transport,Human hemoglobin
+1GZX,Hemoglobin,Oxygen transport,Human hemoglobin
+1A3R,Hemoglobin,Oxygen transport,Human fetal hemoglobin
+1ALB,Serum albumin,Transport protein,Human serum albumin
+1BM0,Serum albumin,Transport protein,Human serum albumin
+1E7I,Serum albumin,Transport protein,Bovine serum albumin
+1LOV,Serum albumin,Transport protein,Human serum albumin
+1INS,Insulin,Hormone,Human insulin
+2INS,Insulin,Hormone,Porcine insulin
+3INS,Insulin,Hormone,Bovine insulin
+4INS,Insulin,Hormone,Human insulin
+1HTV,Insulin,Hormone,Human insulin
+1G7A,Insulin,Hormone,Human insulin
+1TRZ,Insulin,Hormone,Human insulin
+1ZNI,Insulin,Hormone,Zinc insulin
+1GH1,Growth hormone,Hormone,Human growth hormone
+1HGU,Growth hormone,Hormone,Human growth hormone
+3HHR,Growth hormone,Hormone,Human growth hormone
+1AXI,Growth hormone,Hormone,Bovine growth hormone
+1BGH,Growth hormone,Hormone,Bovine growth hormone
+1BSH,Growth hormone,Hormone,Bovine growth hormone
+1DAN,Growth hormone,Hormone,Human growth hormone
+1HUW,Growth hormone,Hormone,Human growth hormone
+1FBM,Alpha-fetoprotein,Serum protein,Mouse alpha-fetoprotein
+1O03,Alpha-fetoprotein,Serum protein,Human alpha-fetoprotein
+1ALF,Alpha-fetoprotein,Serum protein,Human alpha-fetoprotein
+1DFJ,Alpha-fetoprotein,Serum protein,Human alpha-fetoprotein
+1BRF,Ferritin,Iron storage,Horse ferritin
+1FHA,Ferritin,Iron storage,Human ferritin
+1RCG,Ferritin,Iron storage,Rat ferritin
+2FHA,Ferritin,Iron storage,Human ferritin
+1AEP,Ferritin,Iron storage,Human ferritin
+1MFR,Ferritin,Iron storage,Mouse ferritin
+1DAT,Ferritin,Iron storage,Human ferritin
+2FFX,Ferritin,Iron storage,Rat ferritin
+1FIG,Ferritin,Iron storage,Human ferritin
+1H96,Ferritin,Iron storage,Human ferritin
+1R03,Ferritin,Iron storage,Human ferritin
+1FTH,Ferritin,Iron storage,Human ferritin
+1IES,Ferritin,Iron storage,Human ferritin
+1JG1,Ferritin,Iron storage,Human ferritin
+2FG4,Ferritin,Iron storage,Human ferritin
+1LB3,Ferritin,Iron storage,E. coli ferritin
+1S3Q,Ferritin,Iron storage,E. coli ferritin
+1BCF,Ferritin,Iron storage,E. coli ferritin
+1B71,Ferritin,Iron storage,E. coli ferritin
+1NF4,Ferritin,Iron storage,E. coli ferritin
+1EUM,Ferritin,Iron storage,E. coli ferritin
+1IK3,Ferritin,Iron storage,E. coli ferritin
+2Z6M,Ferritin,Iron storage,E. coli ferritin
+1VLG,Ferritin,Iron storage,E. coli ferritin
+1SQ3,Ferritin,Iron storage,E. coli ferritin
+1SOQ,Ferritin,Iron storage,E. coli ferritin
+1NFS,Ferritin,Iron storage,E. coli ferritin
+1KQ8,Ferritin,Iron storage,E. coli ferritin
+1JTS,Ferritin,Iron storage,E. coli ferritin
+1JG0,Ferritin,Iron storage,E. coli ferritin
+1JER,Ferritin,Iron storage,E. coli ferritin
+1IE9,Ferritin,Iron storage,E. coli ferritin
+1IB6,Ferritin,Iron storage,E. coli ferritin
+2CEI,Ferritin,Iron storage,E. coli ferritin
+2CEC,Ferritin,Iron storage,E. coli ferritin
+1B73,Ferritin,Iron storage,E. coli ferritin
+1RRG,Ferritin,Iron storage,E. coli ferritin
+1QGH,Ferritin,Iron storage,E. coli ferritin
+1Q1N,Ferritin,Iron storage,E. coli ferritin
+1PBX,Ferritin,Iron storage,E. coli ferritin
+1NF8,Ferritin,Iron storage,E. coli ferritin
+1MLW,Ferritin,Iron storage,E. coli ferritin
+1MFD,Ferritin,Iron storage,E. coli ferritin
+1MEF,Ferritin,Iron storage,E. coli ferritin
+1M6S,Ferritin,Iron storage,E. coli ferritin
+1LB5,Ferritin,Iron storage,E. coli ferritin
+1LB4,Ferritin,Iron storage,E. coli ferritin
+1KQ7,Ferritin,Iron storage,E. coli ferritin
+1KNP,Ferritin,Iron storage,E. coli ferritin
+1JG3,Ferritin,Iron storage,E. coli ferritin
+1JG2,Ferritin,Iron storage,E. coli ferritin
+1JFW,Ferritin,Iron storage,E. coli ferritin
+1EIE,Ferritin,Iron storage,E. coli ferritin
+1EFJ,Ferritin,Iron storage,E. coli ferritin
+1CWX,Ferritin,Iron storage,E. coli ferritin
+1B72,Ferritin,Iron storage,E. coli ferritin
