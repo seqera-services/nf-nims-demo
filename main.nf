@@ -48,21 +48,22 @@ workflow {
         .filter { pdb_id -> pdb_id && pdb_id.length() > 0 }
         .map { pdb_id -> 
             // Use Nextflow's built-in file() function to download from RCSB
-            def pdb_file = file("https://files.rcsb.org/download/${pdb_id}.pdb")
+            def pdb_file = file("https://files.rcsb.org/download/${pdb_id}.pdb", checkIfExists: true)
             return tuple(pdb_id, pdb_file)
         }
     
     // Process through RFDiffusion in parallel
     rfdiffusion_results = RFDiffusion(pdb_channel)
     
+    // TODO
     // Collect metrics and generate reports
-    batch_metrics = collectMetrics(rfdiffusion_results.metrics.collect())
-    
+    // batch_metrics = collectMetrics(rfdiffusion_results.metrics.collect())
+
     // Generate summary report
-    generateSummaryReport(
-        batch_metrics.first(),
-        rfdiffusion_results.results.map { it[2] }.collect() // Collect all result files
-    )
+    // generateSummaryReport(
+    //     batch_metrics.first(),
+    //     rfdiffusion_results.results.map { it[2] }.collect() // Collect all result files
+    // )
 }
 
 process RFDiffusion {
@@ -79,9 +80,8 @@ process RFDiffusion {
     tuple val(pdb_id), path(pdb_file)
     
     output:
-    tuple val(pdb_id), path("${pdb_id}_output.pdb"), path("${pdb_id}_nim_result.json"), emit: results
-    path "${pdb_id}_metrics.json", emit: metrics
-    
+    tuple val(pdb_id), path("output.pdb"), path("nim_result.json"), emit: results
+
     script:
     task.ext.nim = "rfdiffusion"
     task.ext.contigs = params.contigs
@@ -123,14 +123,8 @@ process RFDiffusion {
 }
 EOF
     
-    # Rename output files to include PDB ID for clarity
-    if [[ -f "output.pdb" ]]; then
-        mv output.pdb ${pdb_id}_output.pdb
-    fi
-    
-    if [[ -f "nim_result.json" ]]; then
-        mv nim_result.json ${pdb_id}_nim_result.json
-    fi
+    # NIM executor produces output.pdb and nim_result.json directly
+    echo "NIM executor should have produced output.pdb and nim_result.json"
     
     echo "RFDiffusion processing completed for ${pdb_id} in \$duration seconds"
     """
