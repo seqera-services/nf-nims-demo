@@ -8,7 +8,7 @@ nextflow.enable.dsl=2
  * Inspired by Latch.bio's massively parallel protein analysis approach
  */
 
-params.pdb_dataset = "pdb_dataset_valid.csv"
+params.pdb_dataset = "${projectDir}/pdb_dataset_valid.csv"
 params.max_structures = 200  // Limit for testing, set to 0 for all
 params.rfdiffusion_batch_size = 10  // Process in batches to avoid overwhelming the API
 params.output_dir = "results"
