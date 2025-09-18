@@ -2,3 +2,4 @@ work/
 .nextflow*
 .lineage/
 batch_results/
+CLAUDE.md

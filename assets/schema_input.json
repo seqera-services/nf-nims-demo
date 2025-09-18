@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/nf-nims-demo/master/assets/schema_input.json",
+    "title": "nf-nims-demo pipeline - params.input schema",
+    "description": "Schema for the file provided with params.input",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "pdb_id": {
+                "type": "string",
+                "pattern": "^[A-Z0-9]{4}$",
+                "errorMessage": "PDB ID must be exactly 4 characters (letters and numbers)",
+            },
+            "name": {
+                "type": "string",
+                "errorMessage": "Name must be provided as a string",
+                "meta": ["name"]
+            },
+            "contigs": {
+                "type": "string",
+                "errorMessage": "Contigs must be provided as a string",
+                "meta": ["contigs"]
+            },
+            "hotspot_res": {
+                "type": "string",
+                "errorMessage": "Hotspot residues must be provided as a string",
+                "meta": ["hotspot_res"]
+            }
+        },
+        "required": ["pdb_id","name"]
+    }
+}
