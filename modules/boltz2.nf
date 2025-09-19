@@ -2,16 +2,13 @@ process BOLTZ2_SCRIPT {
     tag "${meta.pdb_id}"
     executor 'local'
 
-    // NVIDIA Rate limits - reduced for Boltz2
-    maxForks 5
-
     publishDir "${params.output_dir}/boltz2_outputs", mode: 'copy'
 
     input:
-    tuple val(meta), path(fasta_file), path(pdb_file)
+    tuple val(meta), val(fasta_content), path(pdb_file)
 
     output:
-    tuple val(meta), path("${fasta_file.baseName}_boltz2_output.json"), path("${fasta_file.baseName}_predicted_structure.cif"), emit: predicted_structures
+    tuple val(meta), path("design_${meta.design_number}_boltz2_output.json"), path("design_${meta.design_number}_boltz2.multimer.cif"), emit: predicted_structures
 
     script:
     """
@@ -31,12 +28,13 @@ process BOLTZ2_SCRIPT {
     MANUAL_TIMEOUT_SECONDS=400
 
     echo "Extracting sequences for complex prediction"
-    echo "FASTA file: ${fasta_file}"
+    echo "FASTA content: ${fasta_content}"
     echo "PDB file: ${pdb_file}"
 
-    # Extract ProteinMPNN designed sequence from FASTA file
-    proteinmpnn_raw=\$(grep -v '^>' "${fasta_file}" | tr -d '\\n')
-    proteinmpnn_sequence=\$(echo "\$proteinmpnn_raw" | sed 's/[^A-Za-z]//g')
+    # Extract ProteinMPNN designed sequence from FASTA content
+    proteinmpnn_raw=\$(echo "${fasta_content}" | grep -v '^>' | tr -d '\\n')
+    # Clean sequence - only keep valid amino acids for Boltz2 (remove B, O, J, U, Z and other invalid chars)
+    proteinmpnn_sequence=\$(echo "\$proteinmpnn_raw" | sed 's/[^ACDEFGHIKLMNPQRSTVWXY]//g')
 
     # Truncate ProteinMPNN sequence if too long for Boltz2 (4096 char limit)
     if [ \${#proteinmpnn_sequence} -gt 4000 ]; then
@@ -138,27 +136,27 @@ EOF
     echo "Received HTTP status code: \$status_code"
 
     # Save the response
-    cp "\$response_body" ${fasta_file.baseName}_boltz2_output.json
+    cp "\$response_body" design_${meta.design_number}_boltz2_output.json
 
     if [ "\$status_code" -eq 200 ]; then
         echo "SUCCESS: Request succeeded - processing response"
 
         # Extract mmCIF structure from response
-        jq -r '.structures[0].structure // empty' ${fasta_file.baseName}_boltz2_output.json > ${fasta_file.baseName}_predicted_structure.cif
+        jq -r '.structures[0].structure // empty' design_${meta.design_number}_boltz2_output.json > design_${meta.design_number}_boltz2.multimer.cif
 
         # Check if structure was extracted
-        if [ ! -s ${fasta_file.baseName}_predicted_structure.cif ]; then
+        if [ ! -s design_${meta.design_number}_boltz2.multimer.cif ]; then
             echo "WARNING: No structure found in response, creating placeholder"
-            echo "# No structure returned from Boltz2" > ${fasta_file.baseName}_predicted_structure.cif
+            echo "# No structure returned from Boltz2" > design_${meta.design_number}_boltz2.multimer.cif
         else
             echo "Successfully extracted predicted structure (mmCIF format)"
-            echo "Structure file size: \$(wc -c < ${fasta_file.baseName}_predicted_structure.cif) bytes"
+            echo "Structure file size: \$(wc -c < design_${meta.design_number}_boltz2.multimer.cif) bytes"
             echo "Structure format: mmCIF"
         fi
             
         # Extract and log analysis info
-        num_structures=\$(jq '.structures | length' ${fasta_file.baseName}_boltz2_output.json 2>/dev/null || echo "0")
-        num_scores=\$(jq '.confidence_scores | length' ${fasta_file.baseName}_boltz2_output.json 2>/dev/null || echo "0")
+        num_structures=\$(jq '.structures | length' design_${meta.design_number}_boltz2_output.json 2>/dev/null || echo "0")
+        num_scores=\$(jq '.confidence_scores | length' design_${meta.design_number}_boltz2_output.json 2>/dev/null || echo "0")
         echo "Number of structures returned: \$num_structures"
         echo "Number of confidence scores: \$num_scores"
 
@@ -170,14 +168,14 @@ EOF
         echo "Task ID: \$task_id"
 
         # Create placeholder mmCIF file for queued tasks
-        echo "# Task queued with ID: \$task_id" > ${fasta_file.baseName}_predicted_structure.cif
+        echo "# Task queued with ID: \$task_id" > design_${meta.design_number}_boltz2.multimer.cif
 
     elif [ "\$status_code" -eq 429 ]; then
         echo "WARNING: Rate limited (HTTP 429) - will retry via Nextflow retry mechanism"
         echo "Response: \$(cat "\$response_body")"
 
         # Create placeholder and exit with error to trigger retry
-        echo "# Rate limited - retrying" > ${fasta_file.baseName}_predicted_structure.cif
+        echo "# Rate limited - retrying" > design_${meta.design_number}_boltz2.multimer.cif
         exit 1
 
     else
@@ -186,13 +184,13 @@ EOF
         cat "\$response_body"
 
         # Create error placeholder
-        echo "# Error: HTTP \$status_code" > ${fasta_file.baseName}_predicted_structure.cif
+        echo "# Error: HTTP \$status_code" > design_${meta.design_number}_boltz2.multimer.cif
         exit 1
     fi
 
     # Cleanup temporary files
     rm -f "\$response_headers" "\$response_body"
 
-    echo "Completed Boltz2 processing for ${fasta_file.baseName}"
+    echo "Completed Boltz2 processing for design_${meta.design_number}"
     """
 }

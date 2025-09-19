@@ -1,0 +1,2 @@
+pdb_id,name,contigs,hotspot_res,proteinmpnn_ca_only,proteinmpnn_use_soluble_model,proteinmpnn_sampling_temp,proteinmpnn_num_seq_per_target
+1R42,ACE2,"A20-60/0 50-100","A50,A51,A52,A53,A54",false,false,0.1,5

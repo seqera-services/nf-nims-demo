@@ -70,10 +70,6 @@ process RFDIFFUSION_SCRIPT {
 process RFDIFFUSION_EXECUTOR {
     tag "${meta.pdb_id}"
     executor 'nim'
-    // NVIDIA Rate limits
-    maxForks 2
-
-    errorStrategy 'retry'
 
     publishDir "${params.output_dir}/rfdiffusion_outputs", mode: 'copy'
 

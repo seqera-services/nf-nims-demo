@@ -6,6 +6,7 @@ include { samplesheetToList }    from 'plugin/nf-schema'
 include { RFDIFFUSION_SCRIPT }   from './modules/rfdiffusion.nf'
 include { RFDIFFUSION_EXECUTOR } from './modules/rfdiffusion.nf'
 include { PROTEINMPNN_SCRIPT } from './modules/proteinmpnn.nf'
+include { PROTEINMPNN_EXECUTOR } from './modules/proteinmpnn.nf'
 include { BOLTZ2_SCRIPT } from './modules/boltz2.nf'
 
 workflow {
@@ -28,42 +29,34 @@ workflow {
 
     // Run ProteinMPNN
     proteinmpnn_results = PROTEINMPNN_SCRIPT(rfdiffusion_script_results.generated_structures)
+    //proteinmpnn_results = PROTEINMPNN_EXECUTOR(rfdiffusion_script_results.generated_structures)
 
-    // Transform ProteinMPNN results to create individual FASTA channels for parallel Boltz2 processing
+    // Split ProteinMPNN multi-FASTA into individual sequences (skip first sequence = original target)
+    // and combine with original PDB files for Boltz2 complex prediction
     proteinmpnn_results.optimized_sequences
-        .map { meta, fasta_files, _json_file ->
-            // Create a list of [meta, individual_fasta_file] for each FASTA file
-            def individual_fastas = []
-            fasta_files.each { fasta_file ->
-                individual_fastas << [meta, fasta_file]
+        .map { meta, multi_fasta, _json_file -> [meta, multi_fasta] }
+        .splitFasta(record: [header: true, sequence: true])
+        .groupTuple(by: 0)  // Group by meta to get all records per sample
+        .flatMap { meta, records ->
+            // Skip first record (original target) and emit individual records with design numbers
+            records.drop(1).withIndex().collect { record, index ->
+                def meta_with_design = meta + [design_number: index + 1]
+                [meta_with_design, record]
             }
-            return individual_fastas
         }
-        .flatten()  // Flatten the list of lists into individual items
-        .collate(2)  // Group back into pairs of [meta, fasta_file]
-        .set { individual_fasta_channel }
-
-    // Debug the individual FASTA channel before joining
-    individual_fasta_channel.view { "Individual FASTA before join: $it" }
-
-    // Join individual FASTA sequences with original PDB files for complex prediction
-    // Use combine and filter to match by pdb_id (more reliable than join for this case)
-    individual_fasta_channel
         .combine(pdb_channel)
-        .filter { meta_fasta, fasta_file, meta_pdb, pdb_file ->
-            // Only keep combinations where pdb_id matches
+        .filter { meta_fasta, fasta_record, meta_pdb, _pdb_file ->
             meta_fasta.pdb_id == meta_pdb.pdb_id
         }
-        .map { meta_fasta, fasta_file, meta_pdb, pdb_file ->
-            // Return [meta, fasta_file, pdb_file]
-            [meta_fasta, fasta_file, pdb_file]
+        .map { meta_fasta, fasta_record, _meta_pdb, pdb_file ->
+            // Create temporary FASTA file from record for Boltz2
+            def fasta_content = "${fasta_record.header}\n${fasta_record.sequence}"
+            [meta_fasta, fasta_content, pdb_file]
         }
-        .set { complex_channel }
-
-    complex_channel.view { "Complex channel: $it" }
+        .set { ch_multimer_fasta }
 
     // Run Boltz2 on each complex (ProteinMPNN sequence + original PDB)
-    boltz2_results = BOLTZ2_SCRIPT(complex_channel)
+    boltz2_results = BOLTZ2_SCRIPT(ch_multimer_fasta)
 }
 
 // workflow.onComplete {

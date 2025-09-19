@@ -2,19 +2,13 @@ process PROTEINMPNN_SCRIPT {
     tag "${meta.pdb_id}"
     executor 'local'
 
-    // NVIDIA Rate limits
-    maxForks 2
-
-    errorStrategy 'retry'
-    maxRetries 3
-
     publishDir "${params.output_dir}/proteinmpnn_outputs", mode: 'copy'
 
     input:
     tuple val(meta), path(pdb_file), path(rfdiffusion_result_file)
 
     output:
-    tuple val(meta), path("${meta.pdb_id}_seq_*.fasta"), path("${meta.pdb_id}_proteinmpnn_result.json"), emit: optimized_sequences
+    tuple val(meta), path("${meta.pdb_id}_designed_sequences.fasta"), path("${meta.pdb_id}_proteinmpnn_result.json"), emit: optimized_sequences
 
     script:
 
@@ -51,7 +45,8 @@ process PROTEINMPNN_SCRIPT {
      "ca_only": ${meta.proteinmpnn_ca_only ?: false},
      "use_soluble_model": ${meta.proteinmpnn_use_soluble_model ?: false},
      "sampling_temp": [${meta.proteinmpnn_sampling_temp ?: 0.1}],
-     "num_seq_per_target": ${meta.proteinmpnn_num_seq_per_target ?: 1}
+     "num_seq_per_target": ${meta.proteinmpnn_num_seq_per_target ?: 1},
+     "input_pdb_chains": ["B"]
     }'
 
     echo "Request preview: \$(echo \"\$request\" | head -c 200)..."
@@ -61,59 +56,86 @@ process PROTEINMPNN_SCRIPT {
 
     echo "\$response" > ${meta.pdb_id}_proteinmpnn_result.json
 
-    # Extract FASTA sequences from the mfasta field
-    echo "\$response" | jq -r '.mfasta // empty' > temp_sequences.fasta
+    # Extract FASTA sequences from the mfasta field and save as single multi-FASTA
+    echo "\$response" | jq -r '.mfasta // empty' > ${meta.pdb_id}_designed_sequences.fasta
 
     # Check if FASTA sequences were extracted successfully
-    if [ ! -s temp_sequences.fasta ]; then
+    if [ ! -s ${meta.pdb_id}_designed_sequences.fasta ]; then
         echo "WARNING: No FASTA sequences found in response, creating empty file"
-        touch ${meta.pdb_id}_seq_1.fasta
+        touch ${meta.pdb_id}_designed_sequences.fasta
     else
-        echo "Successfully extracted FASTA sequences"
-        total_seqs=\$(grep -c '^>' temp_sequences.fasta || echo 0)
-        echo "Number of sequences: \$total_seqs"
-
-        # Split multi-FASTA into individual files
-        seq_counter=1
-        current_seq=""
-        current_header=""
-
-        while IFS= read -r line; do
-            if [[ "\$line" == ">"* ]]; then
-                # If we have a previous sequence, write it to file
-                if [ ! -z "\$current_header" ]; then
-                    echo "\$current_header" > ${meta.pdb_id}_seq_\${seq_counter}.fasta
-                    echo "\$current_seq" >> ${meta.pdb_id}_seq_\${seq_counter}.fasta
-                    echo "Created ${meta.pdb_id}_seq_\${seq_counter}.fasta"
-                    seq_counter=\$((seq_counter + 1))
-                fi
-                # Start new sequence
-                current_header="\$line"
-                current_seq=""
-            else
-                # Append to current sequence
-                if [ ! -z "\$current_seq" ]; then
-                    current_seq="\$current_seq\$line"
-                else
-                    current_seq="\$line"
-                fi
-            fi
-        done < temp_sequences.fasta
-
-        # Write the last sequence
-        if [ ! -z "\$current_header" ]; then
-            echo "\$current_header" > ${meta.pdb_id}_seq_\${seq_counter}.fasta
-            echo "\$current_seq" >> ${meta.pdb_id}_seq_\${seq_counter}.fasta
-            echo "Created ${meta.pdb_id}_seq_\${seq_counter}.fasta"
-        fi
-
-        # Clean up temp file
-        rm temp_sequences.fasta
-
-        echo "Split \$total_seqs sequences into individual FASTA files"
+        total_seqs=\$(grep -c '^>' ${meta.pdb_id}_designed_sequences.fasta || echo 0)
+        echo "Successfully extracted \$total_seqs sequences to multi-FASTA file"
+        echo "First sequence header: \$(head -1 ${meta.pdb_id}_designed_sequences.fasta)"
     fi
 
     echo "Completed ProteinMPNN processing for ${meta.pdb_id}"
     """
 }
 
+process PROTEINMPNN_EXECUTOR {
+    tag "${meta.pdb_id}"
+    executor 'nim'
+
+    // NVIDIA Rate limits
+    maxForks 2
+
+    publishDir "${params.output_dir}/proteinmpnn_outputs", mode: 'copy'
+
+    input:
+    tuple val(meta), path(pdb_file), path(rfdiffusion_result_file)
+
+    output:
+    tuple val(meta), path("output.fasta"), path("nim_result.json"), emit: optimized_sequences
+
+    script:
+    task.ext.nim = "proteinmpnn"
+    task.ext.ca_only = meta.proteinmpnn_ca_only ?: false
+    task.ext.use_soluble_model = meta.proteinmpnn_use_soluble_model ?: false
+    task.ext.sampling_temp = [meta.proteinmpnn_sampling_temp ?: 0.1]
+    task.ext.num_seq_per_target = meta.proteinmpnn_num_seq_per_target ?: 1
+    // Only design the binder chain B, keep target chain A fixed
+
+    """
+    echo "Processing ${meta.pdb_id} through ProteinMPNN NIM service"
+    echo "Input PDB: ${pdb_file}"
+    echo "Service: ${task.ext.nim}"
+    echo "CA only: ${task.ext.ca_only}"
+    echo "Use soluble model: ${task.ext.use_soluble_model}"
+    echo "Sampling temperature: ${task.ext.sampling_temp}"
+    echo "Sequences per target: ${task.ext.num_seq_per_target}"
+
+    # Create start time marker
+    start_time=\$(date +%s)
+    start_timestamp=\$(date -Iseconds)
+
+    # The NIM executor will handle the actual API call
+    # Output files will be generated automatically
+    echo "ProteinMPNN processing initiated at \$start_timestamp"
+
+    # Create end time marker and calculate duration
+    end_time=\$(date +%s)
+    end_timestamp=\$(date -Iseconds)
+    duration=\$((end_time - start_time))
+
+    # Generate metrics JSON
+    cat > ${meta.pdb_id}_metrics.json << EOF
+{
+    "pdb_id": "${meta.pdb_id}",
+    "start_time": "\$start_timestamp",
+    "end_time": "\$end_timestamp",
+    "duration_seconds": \$duration,
+    "ca_only": ${task.ext.ca_only},
+    "use_soluble_model": ${task.ext.use_soluble_model},
+    "sampling_temp": ${task.ext.sampling_temp},
+    "num_seq_per_target": ${task.ext.num_seq_per_target},
+    "status": "success"
+}
+EOF
+
+    # NIM executor produces output.fasta and nim_result.json directly
+    echo "NIM executor should have produced output.fasta and nim_result.json"
+
+    echo "ProteinMPNN processing completed for ${meta.pdb_id} in \$duration seconds"
+    """
+}

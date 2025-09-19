@@ -10,7 +10,7 @@
             "pdb_id": {
                 "type": "string",
                 "pattern": "^[A-Z0-9]{4}$",
-                "errorMessage": "PDB ID must be exactly 4 characters (letters and numbers)",
+                "errorMessage": "PDB ID must be exactly 4 characters (letters and numbers)"
             },
             "name": {
                 "type": "string",
@@ -27,14 +27,9 @@
                 "errorMessage": "Hotspot residues must be provided as a string",
                 "meta": ["hotspot_res"]
             },
-            "proteinmpnn_model": {
-                "type": "string",
-                "errorMessage": "ProteinMPNN model must be provided as a string",
-                "meta": ["proteinmpnn_model"]
-            },
             "proteinmpnn_ca_only": {
-                "type": "string",
-                "errorMessage": "ProteinMPNN ca_only must be provided as a string",
+                "type": "boolean",
+                "errorMessage": "ProteinMPNN ca_only must be provided as a boolean",
                 "meta": ["proteinmpnn_ca_only"]
             },
             "proteinmpnn_use_soluble_model": {
