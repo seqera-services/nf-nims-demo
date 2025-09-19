@@ -28,8 +28,8 @@ workflow {
     // rfdiffusion_executor_results = RFDIFFUSION_EXECUTOR(pdb_channel)
 
     // Run ProteinMPNN
-    proteinmpnn_results = PROTEINMPNN_SCRIPT(rfdiffusion_script_results.generated_structures)
-    //proteinmpnn_results = PROTEINMPNN_EXECUTOR(rfdiffusion_script_results.generated_structures)
+    //proteinmpnn_results = PROTEINMPNN_SCRIPT(rfdiffusion_script_results.generated_structures)
+    proteinmpnn_results = PROTEINMPNN_EXECUTOR(rfdiffusion_script_results.generated_structures)
 
     // Split ProteinMPNN multi-FASTA into individual sequences (skip first sequence = original target)
     // and combine with original PDB files for Boltz2 complex prediction
