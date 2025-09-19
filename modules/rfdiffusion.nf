@@ -77,7 +77,7 @@ process RFDIFFUSION_EXECUTOR {
     tuple val(meta), path(pdb_file)
 
     output:
-    tuple val(meta), path("output.pdb"), path("nim_result.json"), emit: results
+    tuple val(meta), path("output.pdb"), path("nim_result.json"), emit: generated_structures
 
     script:
     task.ext.nim = "rfdiffusion"
