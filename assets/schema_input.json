@@ -26,6 +26,31 @@
                 "type": "string",
                 "errorMessage": "Hotspot residues must be provided as a string",
                 "meta": ["hotspot_res"]
+            },
+            "proteinmpnn_model": {
+                "type": "string",
+                "errorMessage": "ProteinMPNN model must be provided as a string",
+                "meta": ["proteinmpnn_model"]
+            },
+            "proteinmpnn_ca_only": {
+                "type": "string",
+                "errorMessage": "ProteinMPNN ca_only must be provided as a string",
+                "meta": ["proteinmpnn_ca_only"]
+            },
+            "proteinmpnn_use_soluble_model": {
+                "type": "boolean",
+                "errorMessage": "ProteinMPNN use_soluble_model must be provided as a boolean",
+                "meta": ["proteinmpnn_use_soluble_model"]
+            },
+            "proteinmpnn_sampling_temp": {
+                "type": "number",
+                "errorMessage": "ProteinMPNN sampling temperature must be provided as a number",
+                "meta": ["proteinmpnn_sampling_temp"]
+            },
+            "proteinmpnn_num_seq_per_target": {
+                "type": "integer",
+                "errorMessage": "ProteinMPNN num_seq_per_target must be provided as an integer",
+                "meta": ["proteinmpnn_num_seq_per_target"]
             }
         },
         "required": ["pdb_id","name"]
